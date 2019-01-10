@@ -1,20 +1,20 @@
 export default {
   workouts: [],
   addWorkout(workout) {
-    this.workouts.push(workout)
+    this.workouts.push(workout);
   },
   presetWorkouts: [
     {
       id: 'overhead',
-      display: 'Overhead Press'
+      display: 'Overhead Press',
     },
     {
       id: 'bench',
-      display: 'Bench Press'
+      display: 'Bench Press',
     },
     {
       id: 'chinups',
-      display: 'Chinups'
+      display: 'Chinups',
     },
     {
       id: 'barbell-rows',
@@ -22,23 +22,23 @@ export default {
     },
     {
       id: 'face-pulls',
-      display: 'Face Pulls'
+      display: 'Face Pulls',
     },
     {
       id: 'arnold',
-      display: 'Arnold'
+      display: 'Arnold',
     },
     {
       id: 'pullups',
-      display: 'Pullups'
+      display: 'Pullups',
     },
     {
       id: 'squats',
-      display: 'Squats'
+      display: 'Squats',
     },
     {
       id: 'deadlift',
-      display: 'Deadlift'
-    }
-  ]
-}
+      display: 'Deadlift',
+    },
+  ],
+};
