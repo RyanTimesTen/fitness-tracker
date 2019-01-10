@@ -4,9 +4,14 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Lockfiles
 yarn.lock
 package-lock.json
+
+# Editor & IDEs
 .idea
+.vscode
 
 # Runtime data
 pids
