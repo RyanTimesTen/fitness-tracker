@@ -22,6 +22,8 @@ class Workout extends React.Component {
   }
 
   handleWeightInput(event) {
+    event.stopPropagation()
+
     this.setState({ weight: event.target.value })
   }
 
@@ -60,6 +62,7 @@ class Workout extends React.Component {
             type="number"
             name="lift-value"
             value={this.state.weight}
+            onClick={this.handleWeightInput}
             onChange={this.handleWeightInput}
             style={{ border: '2px solid black' }}
           />
@@ -82,14 +85,18 @@ class Workout extends React.Component {
   }
 }
 
+function mapDisplayToId(display) {
+  return display.replace(/\s/, '_').toLowerCase()
+}
+
 class NewWorkoutPage extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
       workout: {
-        name: '',
-        value: ''
+        display: '',
+        weight: ''
       }
     }
 
@@ -102,7 +109,7 @@ class NewWorkoutPage extends React.Component {
     this.setState({
       workout: {
         ...this.state.workout,
-        name: event.target.value
+        display: event.target.value
       }
     })
   }
@@ -111,14 +118,15 @@ class NewWorkoutPage extends React.Component {
     this.setState({
       workout: {
         ...this.state.workout,
-        value: event.target.value
+        weight: event.target.value
       }
     })
   }
 
   _createNewWorkout() {
-    WorkoutManager.addWorkout(this.state.workout)
-    console.log(WorkoutManager.workouts)
+    const { workout } = this.state;
+    workout.id = mapDisplayToId(this.state.workout.display)
+    WorkoutManager.addWorkout(workout)
     navigate('/')
   }
 
@@ -146,7 +154,7 @@ class NewWorkoutPage extends React.Component {
           <input
             type="text"
             name="new-workout-name"
-            value={this.state.workout.name}
+            value={this.state.workout.display}
             onChange={this._handleTitleChange}
             placeholder="Ex. Overhead Press"
             style={{ border: '2px solid black' }}
@@ -163,7 +171,7 @@ class NewWorkoutPage extends React.Component {
           <input
             type="number"
             name="lift-value"
-            value={this.state.workout.value}
+            value={this.state.workout.weight}
             onChange={this._handleValueChange}
             style={{ border: '2px solid black' }}
           />
