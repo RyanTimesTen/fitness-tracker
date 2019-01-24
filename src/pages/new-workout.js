@@ -23,6 +23,7 @@ function SetInput({ id, display }) {
         autoFocus
         type="number"
         value={weight}
+        onClick={e => e.stopPropagation()}
         onChange={e => setWeight(e.target.value)}
         name="lift-value"
         style={{ border: '2px solid black' }}
