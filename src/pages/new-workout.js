@@ -30,7 +30,7 @@ function NewWorkout({ id, display }) {
   const [showInput, setShowInput] = useState(false);
   const [sets, setSets] = useState(5);
   const [reps, setReps] = useState(5);
-  const [weight, setWeight] = useState(null);
+  const [weight, setWeight] = useState('');
   const [error, setError] = useState(false);
   const weightRef = React.createRef();
 
@@ -101,6 +101,8 @@ const Header = styled.h3`
 const Input = styled.input`
   border: none;
   border-bottom: 2px solid black;
+  border-radius: 0;
+  appearance: none;
   text-align: right;
   width: 2rem;
   height: 2rem;
