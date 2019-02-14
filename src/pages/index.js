@@ -1,5 +1,5 @@
 import React from 'react';
-import { navigate } from 'gatsby';
+import { Link } from 'gatsby';
 import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Layout from '../components/layout';
@@ -25,7 +25,7 @@ export default function IndexPage() {
           weight={workout.weight}
         />
       ))}
-      <FAB onClick={() => navigate('/new-workout')}>
+      <FAB to="/new-workout">
         <FontAwesomeIcon icon="plus" />
       </FAB>
     </Layout>
@@ -72,7 +72,7 @@ const Value = styled.span`
     `}
 `;
 
-const FAB = styled.button`
+const FAB = styled(Link)`
   position: fixed;
   bottom: 1rem;
   right: 1rem;
@@ -86,4 +86,8 @@ const FAB = styled.button`
   justify-content: center;
   align-items: center;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  &:hover {
+    color: white;
+  }
 `;
