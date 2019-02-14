@@ -77,7 +77,7 @@ const FAB = styled.button`
   bottom: 1rem;
   right: 1rem;
   border-radius: 50%;
-  border-none;
+  border: none;
   background-color: palevioletred;
   color: white;
   width: 3rem;
