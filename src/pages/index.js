@@ -29,7 +29,7 @@ export default function IndexPage() {
         ))
       ) : (
         <Section>
-          <Header>It's pretty empty in here</Header>
+          <Header small>It's pretty empty in here</Header>
           <NewWorkoutLink to="/new-workout">Add a workout!</NewWorkoutLink>
         </Section>
       )}
@@ -113,7 +113,7 @@ const FAB = styled(StyledLink)`
   align-items: center;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
-  &:hover {
+  :hover {
     color: white;
   }
 `;

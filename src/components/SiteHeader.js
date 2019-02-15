@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
+import Header from './Header';
 
 const SiteHeader = ({ siteTitle }) => (
   <div
@@ -16,7 +17,7 @@ const SiteHeader = ({ siteTitle }) => (
         padding: `1.45rem 1.0875rem`,
       }}
     >
-      <h1 style={{ margin: 0 }}>
+      <Header large thin>
         <Link
           to="/"
           style={{
@@ -26,7 +27,7 @@ const SiteHeader = ({ siteTitle }) => (
         >
           {siteTitle}
         </Link>
-      </h1>
+      </Header>
     </div>
   </div>
 );
