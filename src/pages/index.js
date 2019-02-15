@@ -34,9 +34,11 @@ export default function IndexPage() {
         </Section>
       )}
 
-      <FAB to="/new-workout">
-        <FontAwesomeIcon icon="plus" />
-      </FAB>
+      {WorkoutManager.workouts.length > 0 && (
+        <FAB to="/new-workout">
+          <FontAwesomeIcon icon="plus" />
+        </FAB>
+      )}
     </Layout>
   );
 }
