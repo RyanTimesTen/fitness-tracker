@@ -16,15 +16,15 @@ export default function NewWorkoutPage() {
   return (
     <Layout>
       <Header medium>Sup, add a new workout bb</Header>
-      {renderPresetWorkouts()}
+      {session.presetWorkouts.map(workout => (
+        <NewWorkout
+          key={workout.id}
+          id={workout.id}
+          display={workout.display}
+        />
+      ))}
     </Layout>
   );
-}
-
-function renderPresetWorkouts() {
-  return session.presetWorkouts.map(workout => (
-    <NewWorkout key={workout.id} id={workout.id} display={workout.display} />
-  ));
 }
 
 function NewWorkout({ id, display }) {
