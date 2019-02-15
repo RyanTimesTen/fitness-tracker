@@ -1,22 +1,18 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Layout from '../components/Layout';
 import WorkoutManager from '../WorkoutManager';
-import {
-  Card,
-  CardTitle,
-  CardBody,
-  CardLabel,
-  CardContent,
-} from '../components/Card';
 import Header from '../components/Header';
+import Workout from '../components/Workout';
 
 export default function IndexPage() {
   return (
     <Layout>
-      <Header medium>Your Current Session</Header>
+      {WorkoutManager.workouts.length > 0 && (
+        <Header medium>Your Current Session</Header>
+      )}
       {WorkoutManager.workouts.length > 0 ? (
         WorkoutManager.workouts.map(workout => (
           <Workout
@@ -43,28 +39,6 @@ export default function IndexPage() {
   );
 }
 
-function Workout({ display, sets, reps, weight }) {
-  return (
-    <Card>
-      <CardTitle>{display}</CardTitle>
-      <CardBody>
-        <CardContent>
-          <CardLabel>Sets</CardLabel>
-          <Value>{sets}</Value>
-        </CardContent>
-        <CardContent>
-          <CardLabel>Reps</CardLabel>
-          <Value>{reps}</Value>
-        </CardContent>
-        <CardContent>
-          <CardLabel>Weight</CardLabel>
-          <Value width="medium">{weight}</Value>
-        </CardContent>
-      </CardBody>
-    </Card>
-  );
-}
-
 const Section = styled.section`
   display: flex;
   flex-direction: column;
@@ -84,20 +58,6 @@ const NewWorkoutLink = styled(StyledLink)`
   color: white;
   width: 17rem;
   text-align: center;
-`;
-
-const Value = styled.span`
-  display: inline-block;
-  border: none;
-  text-align: right;
-  width: 2rem;
-  height: 2rem;
-
-  ${props =>
-    props.width === 'medium' &&
-    css`
-      width: 3rem;
-    `}
 `;
 
 const FAB = styled(StyledLink)`

@@ -8,19 +8,6 @@ import SiteHeader from './SiteHeader';
 
 library.add(faPlus);
 
-const Wrapper = styled.div`
-  margin: 0 auto;
-  max-width: 960px;
-  padding: 0px 1.0875rem 1.45rem;
-  padding-top: 0;
-`;
-
-const Global = createGlobalStyle`
-  body {
-    background-color: #fff3f7;
-  }
-`;
-
 const Layout = ({ children }) => (
   <StaticQuery
     query={graphql`
@@ -35,7 +22,7 @@ const Layout = ({ children }) => (
     render={data => (
       <>
         <SiteHeader siteTitle={data.site.siteMetadata.title} />
-        <Global />
+        <GlobalStyle />
         <Wrapper>{children}</Wrapper>
       </>
     )}
@@ -45,5 +32,18 @@ const Layout = ({ children }) => (
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+const Wrapper = styled.div`
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 0px 1.0875rem 1.45rem;
+  padding-top: 0;
+`;
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: #fff3f7;
+  }
+`;
 
 export default Layout;
