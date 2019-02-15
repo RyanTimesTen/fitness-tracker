@@ -11,20 +11,29 @@ import {
   CardLabel,
   CardContent,
 } from '../components/card';
+import Header from '../components/Header';
 
 export default function IndexPage() {
   return (
     <Layout>
-      <Header>Your Current Session</Header>
-      {WorkoutManager.workouts.map(workout => (
-        <Workout
-          key={workout.id}
-          display={workout.display}
-          sets={workout.sets}
-          reps={workout.reps}
-          weight={workout.weight}
-        />
-      ))}
+      <Header medium>Your Current Session</Header>
+      {WorkoutManager.workouts.length > 0 ? (
+        WorkoutManager.workouts.map(workout => (
+          <Workout
+            key={workout.id}
+            display={workout.display}
+            sets={workout.sets}
+            reps={workout.reps}
+            weight={workout.weight}
+          />
+        ))
+      ) : (
+        <Section>
+          <Header>It's pretty empty in here</Header>
+          <NewWorkoutLink to="/new-workout">Add a workout!</NewWorkoutLink>
+        </Section>
+      )}
+
       <FAB to="/new-workout">
         <FontAwesomeIcon icon="plus" />
       </FAB>
@@ -54,8 +63,25 @@ function Workout({ display, sets, reps, weight }) {
   );
 }
 
-const Header = styled.h2`
-  margin: 1rem;
+const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledLink = styled(Link)`
+  background-color: palevioletred;
+  color: white;
+`;
+
+const NewWorkoutLink = styled(StyledLink)`
+  border: 2px solid palevioletred;
+  border-radius: 8px;
+  background-color: palevioletred;
+  color: white;
+  width: 17rem;
+  text-align: center;
 `;
 
 const Value = styled.span`
@@ -72,14 +98,12 @@ const Value = styled.span`
     `}
 `;
 
-const FAB = styled(Link)`
+const FAB = styled(StyledLink)`
   position: fixed;
   bottom: 1rem;
   right: 1rem;
   border-radius: 50%;
   border: none;
-  background-color: palevioletred;
-  color: white;
   width: 3rem;
   height: 3rem;
   display: flex;

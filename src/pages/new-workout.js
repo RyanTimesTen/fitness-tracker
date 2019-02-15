@@ -10,11 +10,12 @@ import {
   CardLabel,
   CardContent,
 } from '../components/card';
+import Header from '../components/Header';
 
 export default function NewWorkoutPage() {
   return (
     <Layout>
-      <Header>Sup, add a new workout bb</Header>
+      <Header medium>Sup, add a new workout bb</Header>
       {renderPresetWorkouts()}
     </Layout>
   );
@@ -93,10 +94,6 @@ function NewWorkout({ id, display }) {
     </Card>
   );
 }
-
-const Header = styled.h3`
-  margin: 1rem;
-`;
 
 const Input = styled.input`
   border: none;

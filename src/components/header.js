@@ -1,42 +1,15 @@
-import React from 'react';
-import { Link } from 'gatsby';
-import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 
-const Header = ({ siteTitle }) => (
-  <div
-    style={{
-      background: `palevioletred`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
-    </div>
-  </div>
-);
+const Header = styled.header`
+  margin: 1rem;
+  font-weight: 550;
+  text-align: center;
 
-Header.propTypes = {
-  siteTitle: PropTypes.string,
-};
-
-Header.defaultProps = {
-  siteTitle: ``,
-};
+  ${props =>
+    props.medium &&
+    css`
+      font-size: 1.35rem;
+    `}
+`;
 
 export default Header;
