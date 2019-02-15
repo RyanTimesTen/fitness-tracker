@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'gatsby';
 import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import WorkoutManager from '../WorkoutManager';
 import {
   Card,
@@ -10,7 +10,7 @@ import {
   CardBody,
   CardLabel,
   CardContent,
-} from '../components/card';
+} from '../components/Card';
 import Header from '../components/Header';
 
 export default function IndexPage() {
