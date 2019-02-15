@@ -1,4 +1,4 @@
-export default {
+const session = {
   workouts: [],
   addWorkout(workout) {
     this.workouts.push(workout);
@@ -21,14 +21,6 @@ export default {
       display: 'Barbell Rows',
     },
     {
-      id: 'face-pulls',
-      display: 'Face Pulls',
-    },
-    {
-      id: 'arnold',
-      display: 'Arnold',
-    },
-    {
       id: 'pullups',
       display: 'Pullups',
     },
@@ -42,3 +34,5 @@ export default {
     },
   ],
 };
+
+export default session;

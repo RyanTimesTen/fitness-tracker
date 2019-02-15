@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { navigate } from 'gatsby';
 import styled, { css } from 'styled-components';
 import Layout from '../components/Layout';
-import WorkoutManager from '../WorkoutManager';
+import session from '../session';
 import {
   Card,
   CardTitle,
@@ -22,7 +22,7 @@ export default function NewWorkoutPage() {
 }
 
 function renderPresetWorkouts() {
-  return WorkoutManager.presetWorkouts.map(workout => (
+  return session.presetWorkouts.map(workout => (
     <NewWorkout key={workout.id} id={workout.id} display={workout.display} />
   ));
 }
@@ -44,7 +44,7 @@ function NewWorkout({ id, display }) {
       return;
     }
 
-    WorkoutManager.addWorkout({ id, display, sets, reps, weight });
+    session.addWorkout({ id, display, sets, reps, weight });
     navigate('/');
   }
 

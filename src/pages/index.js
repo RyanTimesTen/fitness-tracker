@@ -3,18 +3,18 @@ import { Link } from 'gatsby';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Layout from '../components/Layout';
-import WorkoutManager from '../WorkoutManager';
+import session from '../session';
 import Header from '../components/Header';
 import Workout from '../components/Workout';
 
 export default function IndexPage() {
   return (
     <Layout>
-      {WorkoutManager.workouts.length > 0 && (
+      {session.workouts.length > 0 && (
         <Header medium>Your Current Session</Header>
       )}
-      {WorkoutManager.workouts.length > 0 ? (
-        WorkoutManager.workouts.map(workout => (
+      {session.workouts.length > 0 ? (
+        session.workouts.map(workout => (
           <Workout
             key={workout.id}
             display={workout.display}
@@ -30,7 +30,7 @@ export default function IndexPage() {
         </Section>
       )}
 
-      {WorkoutManager.workouts.length > 0 && (
+      {session.workouts.length > 0 && (
         <FAB to="/new-workout">
           <FontAwesomeIcon icon="plus" />
         </FAB>
