@@ -1,12 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import {
-  Card,
-  CardTitle,
-  CardBody,
-  CardLabel,
-  CardContent,
-} from '../components/Card';
+import { Card, CardTitle, CardBody, CardLabel, CardContent } from './Card';
 
 export default function Workout({ display, sets, reps, weight }) {
   return (
