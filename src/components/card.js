@@ -26,3 +26,5 @@ export const CardContent = styled.div`
 export const CardLabel = styled.label`
   margin-right: 0.5rem;
 `;
+
+export default Card;
