@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { navigate } from 'gatsby';
 import styled, { css } from 'styled-components';
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import session from '../session';
 import {
   Card,
@@ -9,8 +9,8 @@ import {
   CardBody,
   CardLabel,
   CardContent,
-} from '../components/card';
-import Header from '../components/header';
+} from '../components/Card';
+import Header from '../components/Header';
 
 export default function NewWorkoutPage() {
   return (

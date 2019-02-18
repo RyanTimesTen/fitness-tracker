@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const Header = styled.header`
   margin: ${props => (props.thin ? '0' : '1rem')};

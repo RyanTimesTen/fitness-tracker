@@ -4,7 +4,7 @@ import { StaticQuery, graphql } from 'gatsby';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import styled, { createGlobalStyle } from 'styled-components';
-import SiteHeader from './siteHeader';
+import SiteHeader from './SiteHeader';
 
 library.add(faPlus);
 

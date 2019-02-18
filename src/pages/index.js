@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'gatsby';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
+import Header from '../components/Header';
+import Workout from '../components/Workout';
 import session from '../session';
-import Header from '../components/header';
-import Workout from '../components/workout';
 
 export default function IndexPage() {
   return (
