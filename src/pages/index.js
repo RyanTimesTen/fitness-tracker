@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Layout from '../components/layout';
 import session from '../session';
 import Header from '../components/header';
-import Workout from '../components/Workout';
+import Workout from '../components/workout';
 
 export default function IndexPage() {
   return (
