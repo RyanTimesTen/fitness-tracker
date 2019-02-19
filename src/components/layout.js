@@ -5,6 +5,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import styled, { createGlobalStyle } from 'styled-components';
 import SiteHeader from './SiteHeader';
+import colors from '../utils/colors';
 
 library.add(faPlus);
 
@@ -42,7 +43,7 @@ const Wrapper = styled.div`
 
 const GlobalStyle = createGlobalStyle`
   body {
-    background-color: #fff3f7;
+    background-color: ${colors.robinhoodBlack};
   }
 `;
 

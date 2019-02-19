@@ -11,11 +11,12 @@ import {
   CardContent,
 } from '../components/Card';
 import Header from '../components/Header';
+import colors from '../utils/colors';
 
 export default function NewWorkoutPage() {
   return (
     <Layout>
-      <Header medium>Sup, add a new workout bb</Header>
+      <Header medium>Add a new activity</Header>
       {session.presetWorkouts.map(workout => (
         <NewWorkout
           key={workout.id}
@@ -97,7 +98,9 @@ function NewWorkout({ id, display }) {
 
 const Input = styled.input`
   border: none;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid white;
+  background-color: ${colors.darkerRobinhoodBlack};
+  color: white;
   border-radius: 0;
   appearance: none;
   text-align: right;
@@ -112,9 +115,9 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  border: 2px solid palevioletred;
+  border: 2px solid ${colors.robinhoodGreen};
   border-radius: 8px;
-  background-color: palevioletred;
+  background-color: ${colors.robinhoodGreen};
   color: white;
   width: 17rem;
 `;

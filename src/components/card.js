@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import colors from '../utils/colors';
 
 export const Card = styled.div`
   padding: 1rem;
@@ -8,7 +9,9 @@ export const Card = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
+  background-color: ${colors.darkerRobinhoodBlack};
+  border: 2px solid ${colors.darkRobinhoodBorderBlack};
+  color: white;
 `;
 
 export const CardTitle = styled.span`

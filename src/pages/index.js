@@ -10,9 +10,7 @@ import session from '../session';
 export default function IndexPage() {
   return (
     <Layout>
-      {session.workouts.length > 0 && (
-        <Header medium>Your Current Session</Header>
-      )}
+      <Header medium>Your Current Session</Header>
       {session.workouts.length > 0 ? (
         session.workouts.map(workout => (
           <Workout
@@ -47,14 +45,14 @@ const Section = styled.section`
 `;
 
 const StyledLink = styled(Link)`
-  background-color: palevioletred;
+  background-color: #00ce9a;
   color: white;
 `;
 
 const NewWorkoutLink = styled(StyledLink)`
-  border: 2px solid palevioletred;
+  border: 2px solid #00ce9a;
   border-radius: 8px;
-  background-color: palevioletred;
+  background-color: #00ce9a;
   color: white;
   width: 17rem;
   text-align: center;
