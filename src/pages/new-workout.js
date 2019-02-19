@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { navigate } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import styled, { css } from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Layout from '../components/Layout';
 import session from '../session';
 import {
@@ -16,7 +17,14 @@ import colors from '../utils/colors';
 export default function NewWorkoutPage() {
   return (
     <Layout>
-      <Header medium>Add a new activity</Header>
+      <HeaderWrapper>
+        <Header medium>
+          <Chevron to="/">
+            <FontAwesomeIcon icon="chevron-left" />
+          </Chevron>
+          Add a new activity
+        </Header>
+      </HeaderWrapper>
       {session.presetWorkouts.map(workout => (
         <NewWorkout
           key={workout.id}
@@ -95,6 +103,17 @@ function NewWorkout({ id, display }) {
     </Card>
   );
 }
+
+const HeaderWrapper = styled(Header)`
+  margin: 0;
+  a {
+    float: left;
+  }
+`;
+
+const Chevron = styled(Link)`
+  color: ${colors.robinhoodGreen};
+`;
 
 const Input = styled.input`
   border: none;

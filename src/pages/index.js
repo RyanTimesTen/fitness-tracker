@@ -6,6 +6,7 @@ import Layout from '../components/Layout';
 import Header from '../components/Header';
 import Workout from '../components/Workout';
 import session from '../session';
+import colors from '../utils/colors';
 
 export default function IndexPage() {
   return (
@@ -24,15 +25,12 @@ export default function IndexPage() {
       ) : (
         <Section>
           <Header small>It's pretty empty in here</Header>
-          <NewWorkoutLink to="/new-workout">Add a workout!</NewWorkoutLink>
         </Section>
       )}
 
-      {session.workouts.length > 0 && (
-        <FAB to="/new-workout">
-          <FontAwesomeIcon icon="plus" />
-        </FAB>
-      )}
+      <FAB to="/new-workout">
+        <FontAwesomeIcon icon="plus" />
+      </FAB>
     </Layout>
   );
 }
@@ -44,21 +42,7 @@ const Section = styled.section`
   align-items: center;
 `;
 
-const StyledLink = styled(Link)`
-  background-color: #00ce9a;
-  color: white;
-`;
-
-const NewWorkoutLink = styled(StyledLink)`
-  border: 2px solid #00ce9a;
-  border-radius: 8px;
-  background-color: #00ce9a;
-  color: white;
-  width: 17rem;
-  text-align: center;
-`;
-
-const FAB = styled(StyledLink)`
+const FAB = styled(Link)`
   position: fixed;
   bottom: 1rem;
   right: 1rem;
@@ -70,6 +54,8 @@ const FAB = styled(StyledLink)`
   justify-content: center;
   align-items: center;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: ${colors.robinhoodGreen};
+  color: white;
 
   :hover {
     color: white;
