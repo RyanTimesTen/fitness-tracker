@@ -35,6 +35,21 @@ export default function NewWorkoutPage() {
   );
 }
 
+const HeaderWrapper = styled(Header)`
+  margin: 0;
+  a {
+    float: left;
+  }
+`;
+
+function BackButton() {
+  return (
+    <Link to="/">
+      <Chevron direction="left" />
+    </Link>
+  );
+}
+
 function NewWorkout({ id, display }) {
   const [showInput, setShowInput] = useState(false);
   const [sets, setSets] = useState(5);
@@ -113,21 +128,6 @@ function NewWorkout({ id, display }) {
   );
 }
 
-const HeaderWrapper = styled(Header)`
-  margin: 0;
-  a {
-    float: left;
-  }
-`;
-
-function BackButton() {
-  return (
-    <Link to="/">
-      <Chevron direction="left" />
-    </Link>
-  );
-}
-
 function Chevron({ direction }) {
   return <StyledFontAwesomeIcon icon={`chevron-${direction}`} />;
 }
@@ -160,4 +160,6 @@ const Button = styled.button`
   background-color: ${colors.robinhoodGreen};
   color: white;
   width: 17rem;
+  height: 3rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 `;

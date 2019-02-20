@@ -27,7 +27,9 @@ export const CardTitle = styled.span`
   align-items: center;
 `;
 
-export const CardBody = styled.div``;
+export const CardBody = styled.div`
+  margin: 1.25rem 0;
+`;
 
 export const CardContent = styled.div`
   margin-bottom: 0.5rem;
