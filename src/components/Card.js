@@ -14,8 +14,17 @@ export const Card = styled.div`
   color: white;
 `;
 
+export const CardHeader = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+
 export const CardTitle = styled.span`
   font-size: 1.25rem;
+  display: flex;
+  align-items: center;
 `;
 
 export const CardBody = styled.div``;

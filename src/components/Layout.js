@@ -2,13 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlus, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPlus,
+  faChevronLeft,
+  faChevronRight,
+  faChevronDown,
+} from '@fortawesome/free-solid-svg-icons';
 import styled, { createGlobalStyle } from 'styled-components';
 import SiteHeader from './SiteHeader';
 import colors from '../utils/colors';
 
-library.add(faPlus);
-library.add(faChevronLeft);
+library.add([faPlus, faChevronLeft, faChevronRight, faChevronDown]);
 
 const Layout = ({ children }) => (
   <StaticQuery

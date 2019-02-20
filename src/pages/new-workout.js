@@ -6,6 +6,7 @@ import Layout from '../components/Layout';
 import session from '../session';
 import {
   Card,
+  CardHeader,
   CardTitle,
   CardBody,
   CardLabel,
@@ -19,9 +20,7 @@ export default function NewWorkoutPage() {
     <Layout>
       <HeaderWrapper>
         <Header medium>
-          <Chevron to="/">
-            <FontAwesomeIcon icon="chevron-left" />
-          </Chevron>
+          <BackButton />
           Add a new activity
         </Header>
       </HeaderWrapper>
@@ -42,6 +41,7 @@ function NewWorkout({ id, display }) {
   const [reps, setReps] = useState(5);
   const [weight, setWeight] = useState('');
   const [error, setError] = useState(false);
+  const [direction, setDirection] = useState('right');
   const weightRef = React.createRef();
 
   function handleSubmit(event) {
@@ -58,8 +58,16 @@ function NewWorkout({ id, display }) {
   }
 
   return (
-    <Card onClick={() => setShowInput(!showInput)}>
-      <CardTitle>{display}</CardTitle>
+    <Card
+      onClick={() => {
+        setShowInput(!showInput);
+        setDirection(direction === 'right' ? 'down' : 'right');
+      }}
+    >
+      <CardHeader>
+        <CardTitle>{display}</CardTitle>
+        <Chevron direction={direction} />
+      </CardHeader>
       {showInput && (
         <>
           <CardBody>
@@ -88,6 +96,7 @@ function NewWorkout({ id, display }) {
                 autoFocus
                 ref={weightRef}
                 type="number"
+                pattern="[0-9]*"
                 value={weight}
                 onClick={e => e.stopPropagation()}
                 onChange={e => setWeight(e.target.value)}
@@ -111,7 +120,19 @@ const HeaderWrapper = styled(Header)`
   }
 `;
 
-const Chevron = styled(Link)`
+function BackButton() {
+  return (
+    <Link to="/">
+      <Chevron direction="left" />
+    </Link>
+  );
+}
+
+function Chevron({ direction }) {
+  return <StyledFontAwesomeIcon icon={`chevron-${direction}`} />;
+}
+
+const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   color: ${colors.robinhoodGreen};
 `;
 
