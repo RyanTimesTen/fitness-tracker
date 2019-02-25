@@ -70,7 +70,7 @@ const Buttons = styled.section`
 
 const Done = styled(Button)``;
 
-const Cancel = styled(Button)`
+const Delete = styled(Button)`
   background-color: ${props => props.theme.robinhoodRed};
   border-color: ${props => props.theme.robinhoodRed};
 `;
@@ -99,15 +99,7 @@ const FAB = styled.button`
   }
 `;
 
-function Workout({
-  name = '',
-  sets = 5,
-  reps = 5,
-  weight = '',
-  session,
-  setSession,
-  onDoneEditing,
-}) {
+function Workout({ name = '', sets = 5, reps = 5, weight = '', onDelete }) {
   const [currentName, setCurrentName] = useState(name);
   const [currentSets, setSets] = useState(sets);
   const [currentReps, setReps] = useState(reps);
@@ -136,16 +128,7 @@ function Workout({
       }
     }
 
-    setSession([
-      ...session,
-      {
-        name: currentName,
-        sets: currentSets,
-        reps: currentReps,
-        weight: currentWeight,
-      },
-    ]);
-    onDoneEditing();
+    setIsEditing(false);
   }
 
   return (
@@ -202,7 +185,7 @@ function Workout({
       {isEditing && (
         <Buttons>
           <Done onClick={handleSubmit}>Done</Done>
-          <Cancel onClick={onDoneEditing}>Cancel</Cancel>
+          <Delete onClick={onDelete}>Delete</Delete>
         </Buttons>
       )}
     </Card>
@@ -210,36 +193,39 @@ function Workout({
 }
 
 export default function IndexPage() {
-  const [creatingNewWorkout, setCreatingNewWorkout] = useState(false);
   const [session, setSession] = useState([]);
+
   return (
     <Layout>
       <Header medium>Your Current Session</Header>
-      {session.length > 0
-        ? session.map((workout, index) => (
-            <Workout
-              key={index}
-              name={workout.name}
-              sets={workout.sets}
-              reps={workout.reps}
-              weight={workout.weight}
-            />
-          ))
-        : !creatingNewWorkout && (
-            <HeaderWrapper>
-              <Header small>It's pretty empty in here</Header>
-            </HeaderWrapper>
-          )}
-
-      {creatingNewWorkout && (
-        <Workout
-          onDoneEditing={() => setCreatingNewWorkout(false)}
-          session={session}
-          setSession={setSession}
-        />
+      {session.length > 0 ? (
+        session.map((workout, index) => (
+          <Workout
+            key={index}
+            name={workout.name}
+            sets={workout.sets}
+            reps={workout.reps}
+            weight={workout.weight}
+            session={session}
+            onDelete={() =>
+              setSession([...session.filter(w => w.id !== workout.id)])
+            }
+          />
+        ))
+      ) : (
+        <HeaderWrapper>
+          <Header small>It's pretty empty in here</Header>
+        </HeaderWrapper>
       )}
 
-      <FAB onClick={() => setCreatingNewWorkout(true)}>
+      <FAB
+        onClick={() =>
+          setSession([
+            ...session,
+            { id: session.length, name: '', sets: 5, reps: 5, weight: '' },
+          ])
+        }
+      >
         <FontAwesomeIcon icon="plus" />
       </FAB>
     </Layout>
