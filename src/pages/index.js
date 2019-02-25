@@ -36,11 +36,7 @@ export default function IndexPage() {
           )}
 
       {creatingNewWorkout && (
-        <NewWorkout
-          id="overhead"
-          display="Overhead Press"
-          handleCompletion={() => setCreatingNewWorkout(false)}
-        />
+        <NewWorkout handleCompletion={() => setCreatingNewWorkout(false)} />
       )}
 
       <FAB onClick={() => setCreatingNewWorkout(true)}>
@@ -50,83 +46,97 @@ export default function IndexPage() {
   );
 }
 
-function NewWorkout({ id, display, handleCompletion }) {
-  const [showInput, setShowInput] = useState(true);
+function NewWorkout({ handleCompletion }) {
+  const [name, setName] = useState('New Workout');
   const [sets, setSets] = useState(5);
   const [reps, setReps] = useState(5);
   const [weight, setWeight] = useState('');
   const [error, setError] = useState(false);
-  const [direction, setDirection] = useState('down');
+
+  const nameRef = React.createRef();
+  const setsRef = React.createRef();
+  const repsRef = React.createRef();
   const weightRef = React.createRef();
 
   function handleSubmit(event) {
     event.stopPropagation();
 
-    if (!weight) {
-      setError(true);
-      weightRef.current.focus();
-      return;
+    for (let [state, ref] of [
+      [name, nameRef],
+      [sets, setsRef],
+      [reps, repsRef],
+      [weight, weightRef],
+    ]) {
+      if (!state) {
+        setError(true);
+        ref.current.focus();
+        return;
+      }
     }
 
-    session.addWorkout({ id, display, sets, reps, weight });
+    session.addWorkout({ id: name, display: name, sets, reps, weight });
     handleCompletion();
   }
 
   return (
-    <Card
-      onClick={() => {
-        setShowInput(!showInput);
-        setDirection(direction === 'right' ? 'down' : 'right');
-      }}
-    >
+    <Card>
       <CardHeader>
-        <CardTitle>{display}</CardTitle>
-        <Chevron direction={direction} />
+        <CardTitle>
+          <Input
+            type="text"
+            ref={nameRef}
+            value={name}
+            onClick={e => e.stopPropagation()}
+            onChange={e => setName(e.target.value)}
+            onFocus={e => e.target.select()}
+            error={error && !name}
+          />
+        </CardTitle>
       </CardHeader>
-      {showInput && (
-        <>
-          <CardBody>
-            <CardContent>
-              <CardLabel htmlFor="sets">Sets</CardLabel>
-              <Input
-                type="number"
-                value={sets}
-                onClick={e => e.stopPropagation()}
-                onChange={e => setSets(e.target.value)}
-              />
-            </CardContent>
-            <CardContent>
-              <CardLabel htmlFor="reps">Reps</CardLabel>
-              <Input
-                type="number"
-                value={reps}
-                onClick={e => e.stopPropagation()}
-                onChange={e => setReps(e.target.value)}
-                name="reps"
-              />
-            </CardContent>
-            <CardContent>
-              <CardLabel htmlFor="weight">Weight</CardLabel>
-              <Input
-                autoFocus
-                ref={weightRef}
-                type="number"
-                pattern="[0-9]*"
-                value={weight}
-                onClick={e => e.stopPropagation()}
-                onChange={e => setWeight(e.target.value)}
-                name="weight"
-                width="medium"
-                error={error}
-              />
-            </CardContent>
-          </CardBody>
-          <Buttons>
-            <Done onClick={handleSubmit}>Done</Done>
-            <Cancel onClick={handleCompletion}>Cancel</Cancel>
-          </Buttons>
-        </>
-      )}
+      <CardBody>
+        <CardContent>
+          <CardLabel htmlFor="sets">Sets</CardLabel>
+          <Input
+            small
+            type="number"
+            value={sets}
+            onClick={e => e.stopPropagation()}
+            onChange={e => setSets(e.target.value)}
+            error={error && !sets}
+          />
+        </CardContent>
+        <CardContent>
+          <CardLabel htmlFor="reps">Reps</CardLabel>
+          <Input
+            small
+            type="number"
+            value={reps}
+            onClick={e => e.stopPropagation()}
+            onChange={e => setReps(e.target.value)}
+            name="reps"
+            error={error && !reps}
+          />
+        </CardContent>
+        <CardContent>
+          <CardLabel htmlFor="weight">Weight</CardLabel>
+          <Input
+            small
+            autoFocus
+            ref={weightRef}
+            type="number"
+            pattern="[0-9]*"
+            value={weight}
+            onClick={e => e.stopPropagation()}
+            onChange={e => setWeight(e.target.value)}
+            name="weight"
+            error={error && !weight}
+          />
+        </CardContent>
+      </CardBody>
+      <Buttons>
+        <Done onClick={handleSubmit}>Done</Done>
+        <Cancel onClick={handleCompletion}>Cancel</Cancel>
+      </Buttons>
     </Card>
   );
 }
@@ -165,18 +175,17 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
 const Input = styled.input`
   border: none;
   border-bottom: 2px solid white;
+  border-radius: 0;
   background-color: ${props => props.theme.darkerRobinhoodBlack};
   color: white;
-  border-radius: 0;
   appearance: none;
-  text-align: right;
-  width: 2rem;
+  text-align: center;
   height: 2rem;
 
   ${props =>
     css`
-      ${props.width === 'medium' ? 'width: 3rem;' : ''}
-      ${props.error ? 'border-bottom-color: red;' : ''}
+      ${props.small ? 'width: 3rem;' : ''}
+      ${props.error ? `border-bottom-color: ${props.theme.robinhoodRed};` : ''}
     `}
 `;
 
@@ -195,7 +204,7 @@ const FAB = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   background-color: ${props => props.theme.robinhoodGreen};
   color: white;
 
