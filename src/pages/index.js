@@ -15,37 +15,87 @@ import {
   CardContent,
 } from '../components/Card';
 
-export default function IndexPage() {
-  const [creatingNewWorkout, setCreatingNewWorkout] = useState(false);
-  return (
-    <Layout>
-      <Header medium>Your Current Session</Header>
-      {session.workouts.length > 0
-        ? session.workouts.map(workout => (
-            <Workout
-              key={workout.id}
-              display={workout.display}
-              sets={workout.sets}
-              reps={workout.reps}
-              weight={workout.weight}
-            />
-          ))
-        : !creatingNewWorkout && (
-            <HeaderWrapper>
-              <Header small>It's pretty empty in here</Header>
-            </HeaderWrapper>
-          )}
+const Input = styled.input`
+  border: none;
+  border-bottom: 2px solid white;
+  border-radius: 0;
+  background-color: ${props => props.theme.darkerRobinhoodBlack};
+  color: white;
+  appearance: none;
+  text-align: center;
+  height: 2.5rem;
 
-      {creatingNewWorkout && (
-        <NewWorkout onFinish={() => setCreatingNewWorkout(false)} />
-      )}
+  ${props =>
+    css`
+      ${props.small ? 'width: 3rem;' : ''}
+      ${props.error ? `border-bottom-color: ${props.theme.robinhoodRed};` : ''}
+    `}
+`;
 
-      <FAB onClick={() => setCreatingNewWorkout(true)}>
-        <FontAwesomeIcon icon="plus" />
-      </FAB>
-    </Layout>
-  );
-}
+const NumberInput = React.forwardRef((props, ref) => (
+  <Input
+    small
+    type="number"
+    ref={ref}
+    value={props.value}
+    onClick={e => e.stopPropagation()}
+    onChange={props.onChange}
+    error={props.error && !props.value}
+  />
+));
+
+NumberInput.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  error: PropTypes.bool,
+};
+
+const Button = styled.button`
+  border: 2px solid ${props => props.theme.robinhoodGreen};
+  border-radius: 8px;
+  background-color: ${props => props.theme.robinhoodGreen};
+  color: white;
+  width: 7rem;
+  height: 3rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+`;
+
+const Buttons = styled.section`
+  width: 85%;
+  display: flex;
+  justify-content: space-around;
+`;
+
+const Done = styled(Button)``;
+
+const Cancel = styled(Button)`
+  background-color: ${props => props.theme.robinhoodRed};
+  border-color: ${props => props.theme.robinhoodRed};
+`;
+
+const HeaderWrapper = styled.section`
+  margin: 2rem;
+`;
+
+const FAB = styled.button`
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  border-radius: 50%;
+  border: none;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: ${props => props.theme.robinhoodGreen};
+  color: white;
+
+  :hover {
+    color: white;
+  }
+`;
 
 function NewWorkout({ onFinish }) {
   const [name, setName] = useState('');
@@ -134,84 +184,34 @@ function NewWorkout({ onFinish }) {
   );
 }
 
-const NumberInput = React.forwardRef((props, ref) => (
-  <Input
-    small
-    type="number"
-    ref={ref}
-    value={props.value}
-    onClick={e => e.stopPropagation()}
-    onChange={props.onChange}
-    error={props.error && !props.value}
-  />
-));
+export default function IndexPage() {
+  const [creatingNewWorkout, setCreatingNewWorkout] = useState(false);
+  return (
+    <Layout>
+      <Header medium>Your Current Session</Header>
+      {session.workouts.length > 0
+        ? session.workouts.map(workout => (
+            <Workout
+              key={workout.id}
+              display={workout.display}
+              sets={workout.sets}
+              reps={workout.reps}
+              weight={workout.weight}
+            />
+          ))
+        : !creatingNewWorkout && (
+            <HeaderWrapper>
+              <Header small>It's pretty empty in here</Header>
+            </HeaderWrapper>
+          )}
 
-NumberInput.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  error: PropTypes.bool,
-};
+      {creatingNewWorkout && (
+        <NewWorkout onFinish={() => setCreatingNewWorkout(false)} />
+      )}
 
-const Button = styled.button`
-  border: 2px solid ${props => props.theme.robinhoodGreen};
-  border-radius: 8px;
-  background-color: ${props => props.theme.robinhoodGreen};
-  color: white;
-  width: 7rem;
-  height: 3rem;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-`;
-
-const Buttons = styled.section`
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-`;
-
-const Done = styled(Button)``;
-
-const Cancel = styled(Button)`
-  background-color: ${props => props.theme.robinhoodRed};
-  border-color: ${props => props.theme.robinhoodRed};
-`;
-
-const Input = styled.input`
-  border: none;
-  border-bottom: 2px solid white;
-  border-radius: 0;
-  background-color: ${props => props.theme.darkerRobinhoodBlack};
-  color: white;
-  appearance: none;
-  text-align: center;
-  height: 2.5rem;
-
-  ${props =>
-    css`
-      ${props.small ? 'width: 3rem;' : ''}
-      ${props.error ? `border-bottom-color: ${props.theme.robinhoodRed};` : ''}
-    `}
-`;
-
-const HeaderWrapper = styled.section`
-  margin: 2rem;
-`;
-
-const FAB = styled.button`
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  border-radius: 50%;
-  border: none;
-  width: 3rem;
-  height: 3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  background-color: ${props => props.theme.robinhoodGreen};
-  color: white;
-
-  :hover {
-    color: white;
-  }
-`;
+      <FAB onClick={() => setCreatingNewWorkout(true)}>
+        <FontAwesomeIcon icon="plus" />
+      </FAB>
+    </Layout>
+  );
+}

@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 export const Card = styled.div`
+  max-width: 350px;
+  margin: 0 auto;
+  margin-bottom: 1.25rem;
   padding: 1rem;
-  margin: 1.5rem 0;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
   display: flex;
