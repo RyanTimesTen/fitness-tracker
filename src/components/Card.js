@@ -28,12 +28,14 @@ export const CardTitle = styled.span`
 
 export const CardBody = styled.div`
   margin: 1.25rem 0;
+  width: 75%;
 `;
 
 export const CardContent = styled.div`
   margin-bottom: 0.5rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const CardLabel = styled.label`

@@ -183,7 +183,7 @@ const Input = styled.input`
   color: white;
   appearance: none;
   text-align: center;
-  height: 2rem;
+  height: 2.5rem;
 
   ${props =>
     css`
