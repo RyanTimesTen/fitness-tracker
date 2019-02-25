@@ -4,8 +4,6 @@ import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Layout from '../components/Layout';
 import Header from '../components/Header';
-import Workout from '../components/Workout';
-import session from '../session';
 import {
   Card,
   CardHeader,
@@ -17,7 +15,6 @@ import {
 
 const Input = styled.input`
   border: none;
-  border-bottom: 2px solid white;
   border-radius: 0;
   background-color: ${props => props.theme.darkerRobinhoodBlack};
   color: white;
@@ -27,8 +24,9 @@ const Input = styled.input`
 
   ${props =>
     css`
-      ${props.small ? 'width: 3rem;' : ''}
-      ${props.error ? `border-bottom-color: ${props.theme.robinhoodRed};` : ''}
+      ${props.small && 'width: 3rem;'}
+      ${props.error && `border-bottom-color: ${props.theme.robinhoodRed};`}
+      ${!props.disabled && 'border-bottom: 2px solid white;'}
     `}
 `;
 
@@ -40,6 +38,7 @@ const NumberInput = React.forwardRef((props, ref) => (
     value={props.value}
     onClick={e => e.stopPropagation()}
     onChange={props.onChange}
+    disabled={props.disabled}
     error={props.error && !props.value}
   />
 ));
@@ -47,6 +46,7 @@ const NumberInput = React.forwardRef((props, ref) => (
 NumberInput.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
   error: PropTypes.bool,
 };
 
@@ -97,12 +97,22 @@ const FAB = styled.button`
   }
 `;
 
-function NewWorkout({ onFinish }) {
-  const [name, setName] = useState('');
-  const [sets, setSets] = useState(5);
-  const [reps, setReps] = useState(5);
-  const [weight, setWeight] = useState('');
+function NewWorkout({
+  name = '',
+  sets = 5,
+  reps = 5,
+  weight = '',
+  session,
+  setSession,
+  onDoneEditing,
+}) {
+  console.log(name);
+  const [currentName, setCurrentName] = useState(name);
+  const [currentSets, setSets] = useState(sets);
+  const [currentReps, setReps] = useState(reps);
+  const [currentWeight, setWeight] = useState(weight);
   const [error, setError] = useState(false);
+  const [isEditing, setIsEditing] = useState(name === '');
 
   const nameRef = React.createRef();
   const setsRef = React.createRef();
@@ -113,10 +123,10 @@ function NewWorkout({ onFinish }) {
     event.stopPropagation();
 
     for (let [state, ref] of [
-      [name, nameRef],
-      [sets, setsRef],
-      [reps, repsRef],
-      [weight, weightRef],
+      [currentName, nameRef],
+      [currentSets, setsRef],
+      [currentReps, repsRef],
+      [currentWeight, weightRef],
     ]) {
       if (!state) {
         setError(true);
@@ -125,8 +135,16 @@ function NewWorkout({ onFinish }) {
       }
     }
 
-    session.addWorkout({ name, sets, reps, weight });
-    onFinish();
+    setSession([
+      ...session,
+      {
+        name: currentName,
+        sets: currentSets,
+        reps: currentReps,
+        weight: currentWeight,
+      },
+    ]);
+    onDoneEditing();
   }
 
   return (
@@ -137,12 +155,13 @@ function NewWorkout({ onFinish }) {
             autoFocus
             type="text"
             ref={nameRef}
-            placeholder="New Workout"
-            value={name}
+            placeholder="Workout Name"
+            disabled={!isEditing}
+            value={currentName}
             onClick={e => e.stopPropagation()}
-            onChange={e => setName(e.target.value)}
+            onChange={e => setCurrentName(e.target.value)}
             onFocus={e => e.target.select()}
-            error={error && !name}
+            error={error && !currentName}
           />
         </CardTitle>
       </CardHeader>
@@ -151,17 +170,19 @@ function NewWorkout({ onFinish }) {
           <CardLabel>Sets</CardLabel>
           <NumberInput
             ref={setsRef}
-            value={sets.toString()}
+            value={currentSets.toString()}
             onChange={e => setSets(e.target.value)}
-            error={error && !sets}
+            disabled={!isEditing}
+            error={error && !currentSets}
           />
         </CardContent>
         <CardContent>
           <CardLabel>Reps</CardLabel>
           <NumberInput
             ref={repsRef}
-            value={reps.toString()}
+            value={currentReps.toString()}
             onChange={e => setReps(e.target.value)}
+            disabled={!isEditing}
             error={error && !reps}
           />
         </CardContent>
@@ -169,29 +190,34 @@ function NewWorkout({ onFinish }) {
           <CardLabel>Weight</CardLabel>
           <NumberInput
             ref={weightRef}
-            value={weight}
+            value={currentWeight}
             onChange={e => setWeight(e.target.value)}
+            disabled={!isEditing}
             pattern="[0-9]*"
             error={error && !weight}
           />
         </CardContent>
       </CardBody>
-      <Buttons>
-        <Done onClick={handleSubmit}>Done</Done>
-        <Cancel onClick={onFinish}>Cancel</Cancel>
-      </Buttons>
+      {isEditing && (
+        <Buttons>
+          <Done onClick={handleSubmit}>Done</Done>
+          <Cancel onClick={onDoneEditing}>Cancel</Cancel>
+        </Buttons>
+      )}
     </Card>
   );
 }
 
 export default function IndexPage() {
   const [creatingNewWorkout, setCreatingNewWorkout] = useState(false);
+  const [session, setSession] = useState([]);
+  console.log(session.length);
   return (
     <Layout>
       <Header medium>Your Current Session</Header>
-      {session.workouts.length > 0
-        ? session.workouts.map((workout, index) => (
-            <Workout
+      {session.length > 0
+        ? session.map((workout, index) => (
+            <NewWorkout
               key={index}
               name={workout.name}
               sets={workout.sets}
@@ -206,7 +232,11 @@ export default function IndexPage() {
           )}
 
       {creatingNewWorkout && (
-        <NewWorkout onFinish={() => setCreatingNewWorkout(false)} />
+        <NewWorkout
+          onDoneEditing={() => setCreatingNewWorkout(false)}
+          session={session}
+          setSession={setSession}
+        />
       )}
 
       <FAB onClick={() => setCreatingNewWorkout(true)}>
