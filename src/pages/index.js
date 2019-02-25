@@ -18,6 +18,8 @@ const Input = styled.input`
   border-radius: 0;
   background-color: ${props => props.theme.darkerRobinhoodBlack};
   color: white;
+  -webkit-text-fill-color: white;
+  opacity: 1;
   appearance: none;
   text-align: center;
   height: 2.5rem;
