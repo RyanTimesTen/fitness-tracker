@@ -5,7 +5,6 @@ import Layout from '../components/Layout';
 import Header from '../components/Header';
 import Workout from '../components/Workout';
 import session from '../session';
-import colors from '../utils/colors';
 import {
   Card,
   CardHeader,
@@ -133,9 +132,9 @@ function NewWorkout({ id, display, handleCompletion }) {
 }
 
 const Button = styled.button`
-  border: 2px solid ${colors.robinhoodGreen};
+  border: 2px solid ${props => props.theme.robinhoodGreen};
   border-radius: 8px;
-  background-color: ${colors.robinhoodGreen};
+  background-color: ${props => props.theme.robinhoodGreen};
   color: white;
   width: 7rem;
   height: 3rem;
@@ -151,8 +150,8 @@ const Buttons = styled.section`
 const Done = styled(Button)``;
 
 const Cancel = styled(Button)`
-  background-color: ${colors.robinhoodRed};
-  border-color: ${colors.robinhoodRed};
+  background-color: ${props => props.theme.robinhoodRed};
+  border-color: ${props => props.theme.robinhoodRed};
 `;
 
 function Chevron({ direction }) {
@@ -160,13 +159,13 @@ function Chevron({ direction }) {
 }
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
-  color: ${colors.robinhoodGreen};
+  color: ${props => props.theme.robinhoodGreen};
 `;
 
 const Input = styled.input`
   border: none;
   border-bottom: 2px solid white;
-  background-color: ${colors.darkerRobinhoodBlack};
+  background-color: ${props => props.theme.darkerRobinhoodBlack};
   color: white;
   border-radius: 0;
   appearance: none;
@@ -197,7 +196,7 @@ const FAB = styled.button`
   justify-content: center;
   align-items: center;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  background-color: ${colors.robinhoodGreen};
+  background-color: ${props => props.theme.robinhoodGreen};
   color: white;
 
   :hover {

@@ -1,42 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { library as fontAwesomeIcons } from '@fortawesome/fontawesome-svg-core';
 import {
   faPlus,
   faChevronLeft,
   faChevronRight,
   faChevronDown,
 } from '@fortawesome/free-solid-svg-icons';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import SiteHeader from './SiteHeader';
-import colors from '../utils/colors';
 
-library.add([faPlus, faChevronLeft, faChevronRight, faChevronDown]);
+fontAwesomeIcons.add([faPlus, faChevronLeft, faChevronRight, faChevronDown]);
 
-const Layout = ({ children }) => (
-  <StaticQuery
-    query={graphql`
-      query SiteTitleQuery {
-        site {
-          siteMetadata {
-            title
-          }
-        }
-      }
-    `}
-    render={data => (
-      <>
-        <SiteHeader siteTitle={data.site.siteMetadata.title} />
-        <GlobalStyle />
-        <Wrapper>{children}</Wrapper>
-      </>
-    )}
-  />
-);
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
+const theme = {
+  robinhoodBlack: '#1b1b1c',
+  darkerRobinhoodBlack: '#252525',
+  darkRobinhoodBorderBlack: '#0e0d0d',
+  robinhoodGreen: '#00ce9a',
+  robinhoodRed: '#ec532f',
 };
 
 const Wrapper = styled.div`
@@ -48,8 +30,35 @@ const Wrapper = styled.div`
 
 const GlobalStyle = createGlobalStyle`
   body {
-    background-color: ${colors.robinhoodBlack};
+    background-color: ${props => props.theme.robinhoodBlack};
   }
 `;
 
-export default Layout;
+export default function Layout({ children }) {
+  return (
+    <ThemeProvider theme={theme}>
+      <StaticQuery
+        query={graphql`
+          query SiteTitleQuery {
+            site {
+              siteMetadata {
+                title
+              }
+            }
+          }
+        `}
+        render={data => (
+          <>
+            <SiteHeader siteTitle={data.site.siteMetadata.title} />
+            <GlobalStyle />
+            <Wrapper>{children}</Wrapper>
+          </>
+        )}
+      />
+    </ThemeProvider>
+  );
+}
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
