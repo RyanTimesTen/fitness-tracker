@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Layout from '../components/Layout';
@@ -47,7 +48,7 @@ export default function IndexPage() {
 }
 
 function NewWorkout({ handleCompletion }) {
-  const [name, setName] = useState('New Workout');
+  const [name, setName] = useState('');
   const [sets, setSets] = useState(5);
   const [reps, setReps] = useState(5);
   const [weight, setWeight] = useState('');
@@ -83,8 +84,10 @@ function NewWorkout({ handleCompletion }) {
       <CardHeader>
         <CardTitle>
           <Input
+            autoFocus
             type="text"
             ref={nameRef}
+            placeholder="New Workout"
             value={name}
             onClick={e => e.stopPropagation()}
             onChange={e => setName(e.target.value)}
@@ -95,40 +98,30 @@ function NewWorkout({ handleCompletion }) {
       </CardHeader>
       <CardBody>
         <CardContent>
-          <CardLabel htmlFor="sets">Sets</CardLabel>
-          <Input
-            small
-            type="number"
+          <CardLabel>Sets</CardLabel>
+          <NumberInput
+            ref={setsRef}
             value={sets}
-            onClick={e => e.stopPropagation()}
             onChange={e => setSets(e.target.value)}
             error={error && !sets}
           />
         </CardContent>
         <CardContent>
-          <CardLabel htmlFor="reps">Reps</CardLabel>
-          <Input
-            small
-            type="number"
+          <CardLabel>Reps</CardLabel>
+          <NumberInput
+            ref={repsRef}
             value={reps}
-            onClick={e => e.stopPropagation()}
             onChange={e => setReps(e.target.value)}
-            name="reps"
             error={error && !reps}
           />
         </CardContent>
         <CardContent>
-          <CardLabel htmlFor="weight">Weight</CardLabel>
-          <Input
-            small
-            autoFocus
+          <CardLabel>Weight</CardLabel>
+          <NumberInput
             ref={weightRef}
-            type="number"
-            pattern="[0-9]*"
             value={weight}
-            onClick={e => e.stopPropagation()}
             onChange={e => setWeight(e.target.value)}
-            name="weight"
+            pattern="[0-9]*"
             error={error && !weight}
           />
         </CardContent>
@@ -140,6 +133,24 @@ function NewWorkout({ handleCompletion }) {
     </Card>
   );
 }
+
+const NumberInput = React.forwardRef((props, ref) => (
+  <Input
+    small
+    type="number"
+    ref={ref}
+    value={props.value}
+    onClick={e => e.stopPropagation()}
+    onChange={props.onChange}
+    error={props.error && !props.value}
+  />
+));
+
+NumberInput.propTypes = {
+  value: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+  error: PropTypes.bool,
+};
 
 const Button = styled.button`
   border: 2px solid ${props => props.theme.robinhoodGreen};
@@ -162,14 +173,6 @@ const Done = styled(Button)``;
 const Cancel = styled(Button)`
   background-color: ${props => props.theme.robinhoodRed};
   border-color: ${props => props.theme.robinhoodRed};
-`;
-
-function Chevron({ direction }) {
-  return <StyledFontAwesomeIcon icon={`chevron-${direction}`} />;
-}
-
-const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
-  color: ${props => props.theme.robinhoodGreen};
 `;
 
 const Input = styled.input`
