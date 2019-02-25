@@ -30,14 +30,14 @@ export default function IndexPage() {
               weight={workout.weight}
             />
           ))
-        : creatingNewWorkout || (
+        : !creatingNewWorkout && (
             <HeaderWrapper>
               <Header small>It's pretty empty in here</Header>
             </HeaderWrapper>
           )}
 
       {creatingNewWorkout && (
-        <NewWorkout handleCompletion={() => setCreatingNewWorkout(false)} />
+        <NewWorkout onFinish={() => setCreatingNewWorkout(false)} />
       )}
 
       <FAB onClick={() => setCreatingNewWorkout(true)}>
@@ -47,7 +47,7 @@ export default function IndexPage() {
   );
 }
 
-function NewWorkout({ handleCompletion }) {
+function NewWorkout({ onFinish }) {
   const [name, setName] = useState('');
   const [sets, setSets] = useState(5);
   const [reps, setReps] = useState(5);
@@ -76,7 +76,7 @@ function NewWorkout({ handleCompletion }) {
     }
 
     session.addWorkout({ id: name, display: name, sets, reps, weight });
-    handleCompletion();
+    onFinish();
   }
 
   return (
@@ -101,7 +101,7 @@ function NewWorkout({ handleCompletion }) {
           <CardLabel>Sets</CardLabel>
           <NumberInput
             ref={setsRef}
-            value={sets}
+            value={sets.toString()}
             onChange={e => setSets(e.target.value)}
             error={error && !sets}
           />
@@ -110,7 +110,7 @@ function NewWorkout({ handleCompletion }) {
           <CardLabel>Reps</CardLabel>
           <NumberInput
             ref={repsRef}
-            value={reps}
+            value={reps.toString()}
             onChange={e => setReps(e.target.value)}
             error={error && !reps}
           />
@@ -128,7 +128,7 @@ function NewWorkout({ handleCompletion }) {
       </CardBody>
       <Buttons>
         <Done onClick={handleSubmit}>Done</Done>
-        <Cancel onClick={handleCompletion}>Cancel</Cancel>
+        <Cancel onClick={onFinish}>Cancel</Cancel>
       </Buttons>
     </Card>
   );
@@ -147,7 +147,7 @@ const NumberInput = React.forwardRef((props, ref) => (
 ));
 
 NumberInput.propTypes = {
-  value: PropTypes.number.isRequired,
+  value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   error: PropTypes.bool,
 };
