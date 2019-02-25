@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Layout from '../components/Layout';
 import Header from '../components/Header';
@@ -27,6 +27,7 @@ const FAB = styled.button`
 
 export default function IndexPage() {
   const [session, setSession] = useState([]);
+  const [lastWorkoutId, setLastWorkoutId] = useState(0);
 
   return (
     <Layout>
@@ -54,12 +55,19 @@ export default function IndexPage() {
       )}
 
       <FAB
-        onClick={() =>
+        onClick={() => {
           setSession([
             ...session,
-            { id: session.length, name: '', sets: 5, reps: 5, weight: '' },
-          ])
-        }
+            {
+              id: lastWorkoutId,
+              name: '',
+              sets: 5,
+              reps: 5,
+              weight: '',
+            },
+          ]);
+          setLastWorkoutId(lastWorkoutId + 1);
+        }}
       >
         <FontAwesomeIcon icon="plus" />
       </FAB>
