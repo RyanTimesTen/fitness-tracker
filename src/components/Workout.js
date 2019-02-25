@@ -2,10 +2,10 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Card, CardTitle, CardBody, CardLabel, CardContent } from './Card';
 
-export default function Workout({ display, sets, reps, weight }) {
+export default function Workout({ name, sets, reps, weight }) {
   return (
     <Card>
-      <CardTitle>{display}</CardTitle>
+      <CardTitle>{name}</CardTitle>
       <CardBody>
         <CardContent>
           <CardLabel>Sets</CardLabel>

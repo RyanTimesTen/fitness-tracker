@@ -125,7 +125,7 @@ function NewWorkout({ onFinish }) {
       }
     }
 
-    session.addWorkout({ id: name, display: name, sets, reps, weight });
+    session.addWorkout({ name, sets, reps, weight });
     onFinish();
   }
 
@@ -190,10 +190,10 @@ export default function IndexPage() {
     <Layout>
       <Header medium>Your Current Session</Header>
       {session.workouts.length > 0
-        ? session.workouts.map(workout => (
+        ? session.workouts.map((workout, index) => (
             <Workout
-              key={workout.id}
-              display={workout.display}
+              key={index}
+              name={workout.name}
               sets={workout.sets}
               reps={workout.reps}
               weight={workout.weight}
