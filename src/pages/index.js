@@ -99,7 +99,7 @@ const FAB = styled.button`
   }
 `;
 
-function NewWorkout({
+function Workout({
   name = '',
   sets = 5,
   reps = 5,
@@ -108,7 +108,6 @@ function NewWorkout({
   setSession,
   onDoneEditing,
 }) {
-  console.log(name);
   const [currentName, setCurrentName] = useState(name);
   const [currentSets, setSets] = useState(sets);
   const [currentReps, setReps] = useState(reps);
@@ -213,13 +212,12 @@ function NewWorkout({
 export default function IndexPage() {
   const [creatingNewWorkout, setCreatingNewWorkout] = useState(false);
   const [session, setSession] = useState([]);
-  console.log(session.length);
   return (
     <Layout>
       <Header medium>Your Current Session</Header>
       {session.length > 0
         ? session.map((workout, index) => (
-            <NewWorkout
+            <Workout
               key={index}
               name={workout.name}
               sets={workout.sets}
@@ -234,7 +232,7 @@ export default function IndexPage() {
           )}
 
       {creatingNewWorkout && (
-        <NewWorkout
+        <Workout
           onDoneEditing={() => setCreatingNewWorkout(false)}
           session={session}
           setSession={setSession}
