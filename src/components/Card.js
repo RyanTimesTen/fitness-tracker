@@ -17,7 +17,7 @@ export const Card = styled.div`
 
 export const CardHeader = styled.header`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   width: 100%;
 `;

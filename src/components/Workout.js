@@ -9,6 +9,7 @@ import {
   CardLabel,
   CardContent,
 } from './Card';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Input = styled.input`
   border: none;
@@ -65,12 +66,35 @@ const Buttons = styled.section`
   justify-content: space-around;
 `;
 
-const Done = styled(Button)``;
+const DoneButton = styled(Button)``;
 
-const Delete = styled(Button)`
+const DeleteButton = styled(Button)`
   background-color: ${props => props.theme.robinhoodRed};
   border-color: ${props => props.theme.robinhoodRed};
 `;
+
+const IconWrapper = styled.button`
+  background-color: ${props => props.theme.darkerRobinhoodBlack};
+  border: none;
+  color: white;
+`;
+
+function Trash({ onClick }) {
+  return (
+    <IconWrapper onClick={onClick}>
+      <FontAwesomeIcon icon="trash-alt" size="lg" />
+    </IconWrapper>
+  );
+}
+
+function Edit({ onClick }) {
+  return (
+    <IconWrapper onClick={onClick}>
+      <FontAwesomeIcon icon="pencil-alt" size="lg" />
+    </IconWrapper>
+  );
+}
+
 export default function Workout({
   name = '',
   sets = 5,
@@ -112,6 +136,7 @@ export default function Workout({
   return (
     <Card>
       <CardHeader>
+        {!isEditing && <Trash onClick={onDelete} />}
         <CardTitle>
           <Input
             autoFocus
@@ -126,6 +151,7 @@ export default function Workout({
             error={error && !currentName}
           />
         </CardTitle>
+        {!isEditing && <Edit onClick={() => setIsEditing(true)} />}
       </CardHeader>
       <CardBody>
         <CardContent>
@@ -162,8 +188,8 @@ export default function Workout({
       </CardBody>
       {isEditing && (
         <Buttons>
-          <Done onClick={handleSubmit}>Done</Done>
-          <Delete onClick={onDelete}>Delete</Delete>
+          <DoneButton onClick={handleSubmit}>Done</DoneButton>
+          <DeleteButton onClick={onDelete}>Delete</DeleteButton>
         </Buttons>
       )}
     </Card>

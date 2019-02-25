@@ -7,11 +7,20 @@ import {
   faChevronLeft,
   faChevronRight,
   faChevronDown,
+  faTrashAlt,
+  faPencilAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import SiteHeader from './SiteHeader';
 
-fontAwesomeIcons.add([faPlus, faChevronLeft, faChevronRight, faChevronDown]);
+fontAwesomeIcons.add([
+  faPlus,
+  faChevronLeft,
+  faChevronRight,
+  faChevronDown,
+  faTrashAlt,
+  faPencilAlt,
+]);
 
 const theme = {
   robinhoodBlack: '#1b1b1c',
