@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Header = styled.header`
-  margin: ${props => (props.thin ? '0' : '1rem')};
+  margin: ${props => props.margin || '0'};
   font-weight: 550;
   text-align: center;
   color: white;
