@@ -9,6 +9,7 @@ import {
   faChevronDown,
   faTrashAlt,
   faPencilAlt,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import SiteHeader from './SiteHeader';
@@ -20,6 +21,7 @@ fontAwesomeIcons.add([
   faChevronDown,
   faTrashAlt,
   faPencilAlt,
+  faTimes,
 ]);
 
 const theme = {
