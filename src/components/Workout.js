@@ -76,13 +76,17 @@ const DeleteButton = styled(Button)`
 const IconWrapper = styled.button`
   background-color: ${props => props.theme.darkerRobinhoodBlack};
   border: none;
-  color: white;
+  color: ${props => (props.red ? props.theme.robinhoodRed : 'white')};
 `;
 
-function Trash({ onClick }) {
+function Trash({ trashClicked, onClick }) {
   return (
-    <IconWrapper onClick={onClick}>
-      <FontAwesomeIcon icon="trash-alt" size="lg" />
+    <IconWrapper red={trashClicked} onClick={onClick}>
+      {trashClicked ? (
+        <FontAwesomeIcon icon="times" size="lg" />
+      ) : (
+        <FontAwesomeIcon icon="trash-alt" size="lg" />
+      )}
     </IconWrapper>
   );
 }
@@ -108,6 +112,7 @@ export default function Workout({
   const [currentWeight, setWeight] = useState(weight);
   const [error, setError] = useState(false);
   const [isEditing, setIsEditing] = useState(name === '');
+  const [trashClicked, setTrashClicked] = useState(false);
 
   const nameRef = React.createRef();
   const setsRef = React.createRef();
@@ -136,7 +141,18 @@ export default function Workout({
   return (
     <Card>
       <CardHeader>
-        {!isEditing && <Trash onClick={onDelete} />}
+        {!isEditing && (
+          <Trash
+            trashClicked={trashClicked}
+            onClick={() => {
+              if (trashClicked) {
+                onDelete();
+              } else {
+                setTrashClicked(true);
+              }
+            }}
+          />
+        )}
         <CardTitle>
           <Input
             autoFocus
