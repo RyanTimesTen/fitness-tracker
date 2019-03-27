@@ -82,11 +82,7 @@ const IconWrapper = styled.button`
 function Trash({ trashClicked, onClick }) {
   return (
     <IconWrapper red={trashClicked} onClick={onClick}>
-      {trashClicked ? (
-        <FontAwesomeIcon icon="times" size="lg" />
-      ) : (
-        <FontAwesomeIcon icon="trash-alt" size="lg" />
-      )}
+      <FontAwesomeIcon icon={trashClicked ? 'times' : 'trash-alt'} size="lg" />
     </IconWrapper>
   );
 }
