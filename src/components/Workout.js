@@ -25,30 +25,10 @@ const Input = styled.input`
   ${props =>
     css`
       ${props.small && 'width: 3rem;'}
-      ${props.error && `border-bottom-color: ${props.theme.robinhoodRed};`}
       ${!props.disabled && 'border-bottom: 2px solid white;'}
+      ${props.error && `border-bottom-color: ${props.theme.robinhoodRed};`}
     `}
 `;
-
-const NumberInput = React.forwardRef((props, ref) => (
-  <Input
-    small
-    type="number"
-    ref={ref}
-    value={props.value}
-    onClick={e => e.stopPropagation()}
-    onChange={props.onChange}
-    disabled={props.disabled}
-    error={props.error && !props.value}
-  />
-));
-
-NumberInput.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  disabled: PropTypes.bool.isRequired,
-  error: PropTypes.bool,
-};
 
 const Button = styled.button`
   border: 2px solid ${props => props.theme.robinhoodGreen};
@@ -95,6 +75,31 @@ function Edit({ onClick }) {
   );
 }
 
+function range(start, end) {
+  if (start === end) return [start];
+  return [start, ...range(start + 1, end)];
+}
+
+const Select = styled.select`
+  border: none;
+  border-radius: 0;
+  background-color: ${props => props.theme.darkerRobinhoodBlack};
+  color: white;
+  -webkit-text-fill-color: white;
+  appearance: none;
+  height: 2.5rem;
+  width: 3rem;
+  text-align: center;
+  text-align-last: center;
+
+  ${props =>
+    css`
+      ${props.small && 'width: 3rem;'}
+      ${props.error && `border-bottom-color: ${props.theme.robinhoodRed};`}
+      ${!props.disabled && 'border-bottom: 2px solid white;'}
+    `}
+`;
+
 export default function Workout({
   name = '',
   sets = 5,
@@ -111,8 +116,6 @@ export default function Workout({
   const [trashClicked, setTrashClicked] = useState(false);
 
   const nameRef = React.createRef();
-  const setsRef = React.createRef();
-  const repsRef = React.createRef();
   const weightRef = React.createRef();
 
   function handleSubmit(event) {
@@ -120,8 +123,6 @@ export default function Workout({
 
     for (let [state, ref] of [
       [currentName, nameRef],
-      [currentSets, setsRef],
-      [currentReps, repsRef],
       [currentWeight, weightRef],
     ]) {
       if (!state) {
@@ -131,6 +132,7 @@ export default function Workout({
       }
     }
 
+    setError(false);
     setIsEditing(false);
   }
 
@@ -168,27 +170,37 @@ export default function Workout({
       <CardBody>
         <CardContent>
           <CardLabel>Sets</CardLabel>
-          <NumberInput
-            ref={setsRef}
-            value={currentSets.toString()}
-            onChange={e => setSets(e.target.value)}
+          <Select
             disabled={!isEditing}
-            error={error && !currentSets}
-          />
+            value={currentSets}
+            onChange={e => setSets(e.target.value)}
+          >
+            {range(1, 10).map(num => (
+              <option key={num} value={num}>
+                {num}
+              </option>
+            ))}
+          </Select>
         </CardContent>
         <CardContent>
           <CardLabel>Reps</CardLabel>
-          <NumberInput
-            ref={repsRef}
-            value={currentReps.toString()}
-            onChange={e => setReps(e.target.value)}
+          <Select
             disabled={!isEditing}
-            error={error && !reps}
-          />
+            value={currentReps}
+            onChange={e => setReps(e.target.value)}
+          >
+            {range(1, 10).map(num => (
+              <option key={num} value={num}>
+                {num}
+              </option>
+            ))}
+          </Select>
         </CardContent>
         <CardContent>
           <CardLabel>Weight</CardLabel>
-          <NumberInput
+          <Input
+            type="number"
+            small
             ref={weightRef}
             value={currentWeight}
             onChange={e => setWeight(e.target.value)}
