@@ -101,18 +101,18 @@ const Select = styled.select`
 `;
 
 export default function Workout({
-  name = '',
-  sets = 5,
-  reps = 5,
-  weight = '',
-  onDelete,
+  initialName = '',
+  initialSets = 5,
+  initialReps = 5,
+  initialWeight = '',
+  deleteHandler,
 }) {
-  const [currentName, setCurrentName] = useState(name);
-  const [currentSets, setSets] = useState(sets);
-  const [currentReps, setReps] = useState(reps);
-  const [currentWeight, setWeight] = useState(weight);
+  const [name, setName] = useState(initialName);
+  const [sets, setSets] = useState(initialSets);
+  const [reps, setReps] = useState(initialReps);
+  const [weight, setWeight] = useState(initialWeight);
   const [error, setError] = useState(false);
-  const [isEditing, setIsEditing] = useState(name === '');
+  const [editing, setEditing] = useState(initialName === '');
   const [trashClicked, setTrashClicked] = useState(false);
 
   const nameRef = React.createRef();
@@ -121,30 +121,31 @@ export default function Workout({
   function handleSubmit(event) {
     event.stopPropagation();
 
-    for (let [state, ref] of [
-      [currentName, nameRef],
-      [currentWeight, weightRef],
-    ]) {
-      if (!state) {
-        setError(true);
-        ref.current.focus();
-        return;
-      }
+    if (!name) {
+      setError(true);
+      nameRef.current.focus();
+      return;
+    }
+
+    if (!weight) {
+      setError(true);
+      weightRef.current.focus();
+      return;
     }
 
     setError(false);
-    setIsEditing(false);
+    setEditing(false);
   }
 
   return (
     <Card>
       <CardHeader>
-        {!isEditing && (
+        {!editing && (
           <Trash
             trashClicked={trashClicked}
             onClick={() => {
               if (trashClicked) {
-                onDelete();
+                deleteHandler();
               } else {
                 setTrashClicked(true);
               }
@@ -157,22 +158,22 @@ export default function Workout({
             type="text"
             ref={nameRef}
             placeholder="Workout Name"
-            disabled={!isEditing}
-            value={currentName}
+            disabled={!editing}
+            value={name}
             onClick={e => e.stopPropagation()}
-            onChange={e => setCurrentName(e.target.value)}
+            onChange={e => setName(e.target.value)}
             onFocus={e => e.target.select()}
-            error={error && !currentName}
+            error={error && !name}
           />
         </CardTitle>
-        {!isEditing && <Edit onClick={() => setIsEditing(true)} />}
+        {!editing && <Edit onClick={() => setEditing(true)} />}
       </CardHeader>
       <CardBody>
         <CardContent>
           <CardLabel>Sets</CardLabel>
           <Select
-            disabled={!isEditing}
-            value={currentSets}
+            disabled={!editing}
+            value={sets}
             onChange={e => setSets(e.target.value)}
           >
             {range(1, 10).map(num => (
@@ -185,8 +186,8 @@ export default function Workout({
         <CardContent>
           <CardLabel>Reps</CardLabel>
           <Select
-            disabled={!isEditing}
-            value={currentReps}
+            disabled={!editing}
+            value={reps}
             onChange={e => setReps(e.target.value)}
           >
             {range(1, 10).map(num => (
@@ -202,18 +203,18 @@ export default function Workout({
             type="number"
             small
             ref={weightRef}
-            value={currentWeight}
+            value={weight}
             onChange={e => setWeight(e.target.value)}
-            disabled={!isEditing}
+            disabled={!editing}
             pattern="[0-9]*"
             error={error && !weight}
           />
         </CardContent>
       </CardBody>
-      {isEditing && (
+      {editing && (
         <Buttons>
           <DoneButton onClick={handleSubmit}>Done</DoneButton>
-          <DeleteButton onClick={onDelete}>Delete</DeleteButton>
+          <DeleteButton onClick={deleteHandler}>Delete</DeleteButton>
         </Buttons>
       )}
     </Card>
